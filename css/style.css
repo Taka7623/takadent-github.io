@@ -1,0 +1,4376 @@
+@charset "utf-8";
+
+
+
+/*========= 途中からハンバーガーメニューに変化するのためのCSS ===============*/
+
+/*========= ボタンのためのCSS ===============*/
+body{
+  background-color: rgb(255 249 177);
+}
+/*ボタン全体の形状*/
+.openbtn1{
+    /*はじめは非表示に*/
+  display: none;
+    /*ボタンの位置*/
+  position:fixed;
+  top:10px;
+  right: 10px;
+  z-index: 999;
+    /*ボタンの形状*/
+    background-color: rgb(228 000 127);  
+  cursor: pointer;
+    width: 60px;
+    height:60px;
+  border-radius: 5px;
+}
+
+/*ボタンのアイコン設定*/
+.openbtn1 span{
+    display: inline-block;
+    transition: all .4s;
+    position: absolute;
+    left: 14px;
+    height: 3px;
+    border-radius: 2px;
+  background-color: #fff;
+    width: 50%;
+  }
+
+.openbtn1 span:nth-of-type(1) {
+  top:18px; 
+}
+
+.openbtn1 span:nth-of-type(2) {
+  top:29px;
+}
+
+.openbtn1 span:nth-of-type(3) {
+  top:40px;
+}
+
+/*activeクラスが付与された後のボタンのアイコン設定*/
+.openbtn1.active span:nth-of-type(1) {
+    top: 22px;
+    left:12px;
+    transform: translateY(6px) rotate(-45deg);
+    width: 60%;
+}
+
+.openbtn1.active span:nth-of-type(2) {
+  opacity: 0;
+}
+
+.openbtn1.active span:nth-of-type(3){
+    top:35px;
+    left: 13px;
+    transform: translateY(-6px) rotate(45deg);
+    width: 60%;
+}
+
+/*fadeDownクラスが付与された後のボタンの出現アニメーション設定*/
+.fadeDown {
+    animation-name: fadeDownAnime;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    display: block;
+}
+@keyframes fadeDownAnime{
+  from {
+    opacity: 0;
+  transform: translateY(-100px);
+  }
+
+  to {
+    opacity: 1;
+  transform: translateY(0);
+  }
+}
+
+
+/*========= ヘッダーナビゲーションのためのCSS ===============*/
+
+/*==ヘッダーの形状*/
+#header{
+  height: 70px;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ 
+  color:#fff;
+  text-align: center;
+  padding: 20px;
+  z-index: 6666;
+}
+
+/*.doneクラスがついたヘッダー*/
+#header.dnone {
+  opacity: 0;/*透過0にして非表示に*/
+}
+
+
+/*メニューボタンをクリックした際に付与されるpanelactiveクラスがついたら*/
+#header.dnone.panelactive {
+  opacity: 1;/*不透明にして出現*/
+  display: flex;
+  flex-direction: column;
+  
+}
+
+
+
+.dent-logo{
+  width: 20%;
+  height: 70px;
+  background-color: #e66a6a;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border-radius: 20px;
+    
+}
+.header-logo{
+  width: 30%;
+  height: 70px;
+
+background-image: url(../images/002.jpg);  
+background-size: contain;
+background-repeat: no-repeat;
+
+}
+
+
+.header-logo-ga{
+  display: block;
+ text-align: left;
+font-size: 25px;
+position: relative;
+top: -20px;
+left: 10px;
+
+}
+@media screen and (max-width:1300px){
+  .dent-logo{
+    width: 30%;
+  } 
+}
+/*==ヘッダーのテキストナビゲーションの形状*/
+#g-navi{
+  width:50%;
+
+}
+#g-navi ul{
+
+  list-style: none;
+  display: flex;
+flex-direction: row;
+  justify-content: center;
+
+	text-align:center;
+	list-style-type:none;
+	font-weight:bold;
+ 
+ 
+}
+#g-navi ul li {
+  width: 90%;
+ 
+  margin: 0 10px;
+}
+
+#g-navi ul li a{
+  display: block;
+  text-decoration: none;
+  color: palevioletred;
+  border-radius: 10px;
+  background-color: rgb(165 212 173);
+  padding:20px 0;
+ font-size: 20px;
+}
+
+#g-navi ul li.current a,
+#g-navi ul li a:hover{
+  color:#fff; 
+}
+
+/*ヘッダーのサブメニューの状態*/
+#g-navi ul ul{
+  display: flex;
+  flex-direction: column;
+ position: fixed;
+ width: 12%;
+display:none;
+z-index: 30;
+}
+.has-child > a::after {
+  content:url(../017.png);
+ margin-left: 15px;
+   
+  }
+#phone{
+  display: inline-block;
+ width: 20%;
+ height: 70px;
+ background-color:rgb(232 082 152 );
+ text-align: center;
+ font-size: 25px;
+ border-radius: 20px;
+ border: 3px solid ;
+
+}
+.phone-fig{
+  position: relative;
+  top: 15px;
+}
+@media screen and (max-width:1300px){
+.phone-fig{
+  position: relative;
+  top:-2px;
+}
+}
+
+/*.doneクラスがついたヘッダーのテキストナビゲーションの形状　ハンバーガーメニューをクリックしてからナビが出るまで*/
+#header.dnone #g-navi{
+    /*固定位置にして最背面に*/
+    position:fixed;
+  top: 0;
+    left: 0;
+  z-index: -1;
+    /*高さと幅*/  
+  width:100%;
+  height: 100vh;
+    /*天地中央＆テキスト中央揃え*/  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+    /*はじめは透過0に*/  
+    opacity: 0;
+  transition: all 0.4s;
+ 
+}
+#header.mini #g-navi{
+  /*固定位置にして最背面に*/
+  position:fixed;
+top: 0;
+  left: 0;
+z-index: -1;
+  /*高さと幅*/  
+width:100%;
+height: 100vh;
+  /*天地中央＆テキスト中央揃え*/  
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+  /*はじめは透過0に*/  
+  opacity: 0;
+transition: all 0.4s;
+
+}
+/*メニューボタンをクリックした際に付与されるpanelactiveクラスがついたナビゲーションの形状*/
+#header.dnone.panelactive #g-navi{
+  opacity: 1;/*不透明に*/
+  z-index:3;/*最前面に*/
+  background:skyblue;
+}
+#header.mini.panelactive #g-navi{
+  opacity: 1;/*不透明に*/
+  z-index:3;/*最前面に*/
+  background:skyblue;
+}
+
+#header.dnone.panelactive #g-navi ul{
+  display: flex;
+  flex-direction: column;/*flexの横並びをblockにして縦並びに*/
+  width: 20%;
+ 
+background-color: #e66a6a;
+}
+#header.mini.panelactive #g-navi ul{
+  display: flex;
+  flex-direction: column;/*flexの横並びをblockにして縦並びに*/
+  width: 60%;
+ 
+background-color: crimson;
+}
+
+/*リストの形状*/
+
+#header.dnone.panelactive #g-navi li a{
+ background-color: blueviolet;
+  text-decoration: none;
+  padding:10px;
+  margin: 10px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+  transition:all 0.3s;
+ 
+}
+#header.mini.panelactive #g-navi li a{
+  background-color: blueviolet;
+   text-decoration: none;
+  
+   padding:10px;
+   margin: 10px;
+   display: block;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   font-weight: bold;
+   transition:all 0.3s;
+  
+ }
+#header.dnone.panelactive #g-navi ul ul{
+  display: flex;
+  flex-direction: column;
+ position: relative;
+ top: 0;
+left: 100px;
+ width: 100%;
+display:block;
+margin-top: 10px;
+display: none;
+}
+#header.mini.panelactive #g-navi ul ul{
+  display: flex;
+  flex-direction: column;
+ position: relative;
+ top: 0;
+left: 100px;
+ width: 100%;
+display:block;
+margin-top: 10px;
+display: none;
+}
+@media screen and (max-width:768px){
+  #header.dnone.panelactive #g-navi ul{
+    display: flex;
+    flex-direction: column;/*flexの横並びをblockにして縦並びに*/
+    width: 30%;
+   
+  background-color: crimson;
+  }
+  
+}
+
+
+#navi > li:last-child > a, nav li:last-child li a{
+	border-right:none;
+  
+}
+@media screen and (max-width:900px){
+#header #g-navi ul {
+  display: none;
+  }
+
+  #header #phone{
+    display: inline-block;
+   width:125%;
+   height: 70px;
+   position: relative;
+   left:-60px;
+   background-color: #e66a6a;
+  text-align: center;
+  
+   font-size: 25px;
+   border-radius: 20px;
+   border: 3px solid ;
+  position: relative;
+  right: 70px;
+  } 
+  
+  #header .dent-logo{
+    width: 170%;
+    height: 70px;
+    background-color: #e66a6a;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        border-radius: 20px;
+        border: 3px solid ;
+        position: relative;
+        right: 10px;
+  }
+  
+  #header .header-logo{
+    width:26%;
+    height: 70px;
+  
+  background-image: url(../002.jpg);  
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  right: 15px;
+  top: 4px;
+  }
+  
+  
+  #header .header-logo-ga{
+    display: block;
+   text-align: left;
+   
+  font-size: 25px;
+ position: relative;
+ top:-27px;
+  }
+}
+@media screen and (max-width:650px){
+  #header{
+    height: 200px;
+    width:50%;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+  }
+  #header .header-logo{
+    width:26%;
+    height: 70px;
+    position: relative;
+    right: 15px;
+    top: -5px;
+    }
+  .dent-logo{
+    width: 30%;
+    height: 70px;
+    margin: 0 auto;
+    position: relative;
+    top: -5px;
+   left: 20%; 
+  
+  }
+  #header #phone{
+    display: inline-block;
+   width:60%;
+   height: 70px;
+  
+   text-align:center;
+  font-size: 30px;
+   border: 3px solid ;
+
+   background-color: #e66a6a;
+
+  position: absolute;
+ left: 110px;
+  top:100px;
+ 
+  }
+}
+@media screen and (max-width:550px){
+  
+  #header  #phone{
+    width: 70%;
+    font-size: 30px;
+    position: absolute;
+    left: 50px;
+     top:100px;
+    
+}
+}
+@media screen and (max-width:450px){
+  #header  #phone{
+    width: 70%;
+    height: 110px;
+    font-size: 30px;
+    position: absolute;
+    left: 50px;
+     top:100px;
+    
+}
+}
+@media screen and (max-width:350px){
+  .dent-logo{
+    width: 90%;
+    height: 70px;
+    margin: 0 auto;
+    position: relative;
+    top: -5px;
+   left:5%; 
+  
+  }
+ 
+#header .header-logo{
+  width:30%;
+  height: 110px;
+  position: relative;
+  right: 15px;
+  top: 5px;
+  }
+}
+   
+  @media screen and (max-width:900px){
+ .openbtn1{
+    background-color: #e66a6a; 
+    border: 3px solid #fff;
+    
+  }
+  
+  
+}
+main{
+	
+	display:block;
+	padding:200px 10px 10px;
+}
+section{
+  position: relative;
+  z-index: 1;
+  padding:30px;
+}
+
+h1{
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size:6vw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.wrapper{
+  position: relative;
+}
+
+.container{
+  background:#555;
+}
+
+.container p{
+  padding: 300px 0; 
+  text-align: center;
+  color: #fff;
+}
+
+.main-tab{
+    
+    width: 15%;
+    height: 200px;
+    background-color: skyblue;
+    position: absolute;
+    top: -120px;
+    right: 200px;
+    border-radius: 50%;
+    text-align: center;
+   border: 3px solid #fff;
+   font-size: 24px;
+   font-weight: bold;
+   display: block;
+} 
+
+.content{
+    position: relative;
+    border-radius: 40% 70% 50% 30%/50%;
+}
+
+
+.slider {
+    position:relative;
+    top: -170px;
+    right: 50px;
+    z-index:-30;
+      /*↑z-indexの値をh1のz-indexの値よりも小さくして背景に回す*/
+      height: 55vh;/*スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+      width: 90%;
+      margin: 0 auto;
+     
+  }
+  /*　背景画像設定　*/
+  
+  .slider-item01{
+    background: url(../003.jpg);
+}
+.slider-item02{
+    background: url(../004.jpg);
+}
+.slider-item03{
+    background: url(../005.jpg);
+}
+  
+  .slider-item {
+    display: block;
+      width:80%;/*各スライダー全体の横幅を画面の高さいっぱい（100%）にする*/
+      height:700px;/*各スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+      background-repeat: no-repeat;/*背景画像をリピートしない*/
+      background-position: center;/*背景画像の位置を中央に*/
+      background-size: cover;/*背景画像が.slider-item全体を覆い表示*/
+      object-fit: cover;
+      border-radius: 40% 70% 50% 30%/50%;
+    text-align: center;
+    border: 3px solid #5abbe4;
+   ;
+  }
+  
+  /*矢印の設定*/
+  
+  .slick-prev, 
+  .slick-next {
+      position: absolute;
+      z-index: 3;
+      top: 80%;
+      cursor: pointer;/*マウスカーソルを指マークに*/
+      outline: none;/*クリックをしたら出てくる枠線を消す*/
+      border-top: 2px solid #fff;/*矢印の色*/
+      border-right: 2px solid #fff;/*矢印の色*/
+      height: 25px;
+      width: 25px;
+      background-color: #333;
+      color: coral;
+  }
+  
+  .slick-prev {/*戻る矢印の位置と形状*/
+      left:10%;
+      transform: rotate(-135deg);
+  }
+  
+  .slick-next {/*次へ矢印の位置と形状*/
+      right:20%;
+      transform: rotate(45deg);
+  }
+  
+  /*ドットナビゲーションの設定*/
+  
+  .slick-dots {
+    
+      z-index:-3;
+      text-align:center;
+      margin:-50px 0 0 0;/*ドットの位置*/
+  }
+  
+  .slick-dots li {
+      display:inline-block;
+      margin:0 5px;
+      position: relative;
+      top: 170px;
+      right: 20px;
+  }
+  
+  .slick-dots button {
+      color: transparent;
+      outline: none;
+      width:8px;/*ドットボタンのサイズ*/
+      height:8px;/*ドットボタンのサイズ*/
+      display:block;
+      border-radius:50%;
+      background:#fff;/*ドットボタンの色*/
+  }
+  
+  .slick-dots .slick-active button{
+      background:#333;/*ドットボタンの現在地表示の色*/
+  }
+ 
+  #hello-denter h1{
+    writing-mode: vertical-rl;
+    display: block;
+    position: relative;
+    top: -550px;
+    left: 20%;
+    font-size: 70px;
+    z-index: -10;
+   color: brown;
+   animation-name: tab-color;
+   animation-duration: 6s;
+   animation-iteration-count: infinite;
+ }
+ 
+ @keyframes tab-color{
+   0%{
+     color: skyblue;
+   }
+   50%{
+     color: red;
+   }
+   100%{
+    color: black;
+   }
+ }
+@media screen and (max-width:1100px){
+  #hello-denter h1{
+ font-size: 60px;
+    position: relative;
+    top: -550px;
+    
+  }
+  .slick-dots li {
+    display:inline-block;
+  
+    position: relative;
+    top: 70px;
+    right: 20px;
+}
+}
+@media screen and (max-width:900px){
+  .slider-item {
+    display: block;
+      width:80%;/*各スライダー全体の横幅を画面の高さいっぱい（100%）にする*/
+      height:700px;/*各スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+      background-repeat: no-repeat;/*背景画像をリピートしない*/
+      background-position: center;/*背景画像の位置を中央に*/
+      background-size: cover;/*背景画像が.slider-item全体を覆い表示*/
+      object-fit: cover;
+      border-radius: 40% 70% 50% 30%/50%;
+    text-align: center;
+    border: 3px solid #5abbe4;
+    margin-right: 50px
+   ;
+  }
+}
+.work-time{
+    display: block;
+    
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 360px;
+    right:40px;
+    z-index:-1;
+    font-size: 20px;
+    font-weight: bold;
+}
+.biz-hour {
+   
+    display: block;
+    border-collapse: collapse;
+   margin: 0 auto;
+    /* overflow-x: scroll;で、
+    スマホ画面幅に表が入りきらない場合は
+    横スクロールしてくれます */
+    overflow-x: scroll;
+  }
+  .biz-hour th, .biz-hour td {
+    padding: 29px;
+    text-align: center;
+    /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+    border: 1px solid #ff6680;
+  }
+  
+  /* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+  .biz-hour th {
+    background-color: pink;
+    font-weight: normal;
+  }
+  
+  /* 「土」の文字色 */
+  .biz-hour th.sat {
+    color: #3db2da;
+  }
+  
+  /* 「日」の文字色 */
+  .biz-hour th.sun {
+    color: #e66a6a;
+  }
+  @media screen and (max-width:1250px){
+
+    .work-time{
+      position: absolute;
+    top: 650px; 
+    right:10%;
+    }
+    .slick-dots li {
+      display:inline-block;
+    
+      position: relative;
+      top: 40px;
+      right: 20px;
+  }
+  #this-denter{
+    padding-top:20%;
+   
+     
+  }
+  }
+ 
+  @media screen and (max-width:900px){
+    .main-page{
+      height: 1600px;
+    }
+    main{
+	
+      display:block;
+   
+    }
+   
+    .slider {
+      position:relative;
+      top: -170px;
+      right: 50px;
+        z-index:-15;
+        /*↑z-indexの値をh1のz-indexの値よりも小さくして背景に回す*/
+        height: 200px;/*スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+        width:100vw;
+        display: block;
+        
+    }
+    .slider-item {
+      display: block;
+        width:100vw;/*各スライダー全体の横幅を画面の高さいっぱい（100%）にする*/
+        height:600px;/*各スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+        background-repeat: no-repeat;/*背景画像をリピートしない*/
+        background-position: center;/*背景画像の位置を中央に*/
+        background-size: cover;/*背景画像が.slider-item全体を覆い表示*/
+        object-fit: cover;
+        border-radius: 20% 50% 30% 10%/30%;
+      text-align: center;
+      border: 3px solid #5abbe4;
+       
+    }
+    .main-tab{
+    
+      width: 40%;
+      height: 200px;
+      background-color: mediumseagreen;
+      position: absolute;
+      top: -170px;
+      right:5px;
+      border-radius: 50%;
+      text-align: center;
+     padding: 10px 0;
+     z-index: -10;
+     font-size: 22px;
+     font-weight: bold;
+  }
+  #hello-denter h1{
+    writing-mode: vertical-rl;
+    display: block;
+    position: relative;
+    top: -80px;
+    left: 40px;
+    font-size: 50px;
+    z-index: -10;
+}
+.slick-dots {
+  position: relative;
+  top: 600px;
+  right: 20px;
+  z-index: 3;
+  text-align:center;
+  margin:-50px 0 0 0;/*ドットの位置*/
+}
+.work-time{
+  display: block;
+  
+  background-color: cornflowerblue;
+  position: absolute;
+  top: 650px;
+  right: 5%;
+  z-index:-1;
+}
+.biz-hour {
+ 
+  display: block;
+  border-collapse: collapse;
+ margin: 0 auto;
+  /* overflow-x: scroll;で、
+  スマホ画面幅に表が入りきらない場合は
+  横スクロールしてくれます */
+  overflow-x: scroll;
+}
+.biz-hour th, .biz-hour td {
+  padding: 19px;
+  text-align: center;
+  /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+  border: 1px solid #ff6680;
+}
+
+/* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+.biz-hour th {
+  background-color: pink;
+  font-weight: normal;
+}
+
+/* 「土」の文字色 */
+.biz-hour th.sat {
+  color: #3db2da;
+}
+
+/* 「日」の文字色 */
+.biz-hour th.sun {
+  color: #e66a6a;
+}
+#this-denter{
+  padding-top:100%;
+ 
+   
+}
+  } 
+
+  @media screen and (max-width:750px){
+    .work-time{
+      display: block;
+      
+      background-color: cornflowerblue;
+      position: absolute;
+      top: 550px;
+      right: 5%;
+      z-index:-1;
+    }
+    .biz-hour {
+     
+      display: block;
+      border-collapse: collapse;
+     margin: 0 auto;
+      /* overflow-x: scroll;で、
+      スマホ画面幅に表が入りきらない場合は
+      横スクロールしてくれます */
+      overflow-x: scroll;
+    }
+    .biz-hour th, .biz-hour td {
+      padding: 19px;
+      text-align: center;
+      /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+      border: 1px solid #ff6680;
+    }
+    
+    /* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+    .biz-hour th {
+      background-color: pink;
+      font-weight: normal;
+    }
+    
+    /* 「土」の文字色 */
+    .biz-hour th.sat {
+      color: #3db2da;
+    }
+    
+    /* 「日」の文字色 */
+    .biz-hour th.sun {
+      color: #e66a6a;
+    }
+    #this-denter{
+      padding-top:100%;
+     
+       
+    }
+  }
+ 
+@media screen and (max-width:650px){
+  
+.work-time{
+  display: block;
+  
+  background-color: cornflowerblue;
+  position: absolute;
+  top: 580px;
+  right: 2%;
+  z-index:-1;
+}
+.biz-hour {
+     
+  display: block;
+  border-collapse: collapse;
+ margin: 0 auto;
+  /* overflow-x: scroll;で、
+  スマホ画面幅に表が入りきらない場合は
+  横スクロールしてくれます */
+  overflow-x: scroll;
+}
+.biz-hour th, .biz-hour td {
+  padding: 15px;
+  text-align: center;
+  /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+  border: 1px solid #ff6680;
+}
+
+/* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+.biz-hour th {
+  background-color: pink;
+  font-weight: normal;
+}
+
+/* 「土」の文字色 */
+.biz-hour th.sat {
+  color: #3db2da;
+}
+
+/* 「日」の文字色 */
+.biz-hour th.sun {
+  color: #e66a6a;
+}
+
+}
+@media screen and (max-width:500px){
+  #hello-denter h1{
+    writing-mode: vertical-rl;
+    display: block;
+    position: relative;
+    top: -100px;
+    left: 20%;
+    font-size: 35px;
+    z-index: -10;
+   color: brown;
+   animation-name: tab-color;
+   animation-duration: 6s;
+   animation-iteration-count: infinite;
+ }
+  .work-time{
+    display: block;
+    
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 550px;
+    right: 5%;
+    z-index:-1;
+  }
+  .biz-hour {
+   
+    display: block;
+    border-collapse: collapse;
+   margin: 0 auto;
+    /* overflow-x: scroll;で、
+    スマホ画面幅に表が入りきらない場合は
+    横スクロールしてくれます */
+    overflow-x: scroll;
+  }
+  .biz-hour th, .biz-hour td {
+    padding: 7px;
+    text-align: center;
+    /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+    border: 1px solid #ff6680;
+  }
+  
+  /* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+  .biz-hour th {
+    background-color: pink;
+    font-weight: normal;
+  }
+  
+  /* 「土」の文字色 */
+  .biz-hour th.sat {
+    color: #3db2da;
+  }
+  
+  /* 「日」の文字色 */
+  .biz-hour th.sun {
+    color: #e66a6a;
+  }
+  #this-denter{
+    padding-top:100%;
+   
+     
+  }
+}
+@media screen and (max-width:450px){
+  #hello-denter h1{
+    writing-mode: vertical-rl;
+    display: block;
+    position: relative;
+    top: -100px;
+    left: 20%;
+    font-size: 40px;
+    z-index: -10;
+   color: brown;
+   animation-name: tab-color;
+   animation-duration: 6s;
+   animation-iteration-count: infinite;
+ }
+  .work-time{
+    display: block;
+    
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 550px;
+    right: 5%;
+    z-index:-1;
+   
+  }
+  .biz-hour {
+   
+    display: block;
+    border-collapse: collapse;
+   margin: 0 auto;
+    /* overflow-x: scroll;で、
+    スマホ画面幅に表が入りきらない場合は
+    横スクロールしてくれます */
+    overflow-x: scroll;
+  }
+  .biz-hour th, .biz-hour td {
+    padding: 4px;
+    text-align: center;
+    /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+    border: 1px solid #ff6680;
+  }
+  
+  /* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+  .biz-hour th {
+    background-color: pink;
+    font-weight: normal;
+  }
+  
+  /* 「土」の文字色 */
+  .biz-hour th.sat {
+    color: #3db2da;
+  }
+  
+  /* 「日」の文字色 */
+  .biz-hour th.sun {
+    color: #e66a6a;
+  }
+  #this-denter{
+    padding-top:100%;
+   
+     
+  }
+}
+@media screen and (max-width:350px){
+  .work-time{
+    display: block;
+    
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 550px;
+    right: 5%;
+    z-index:-1;
+  }
+  .biz-hour {
+   
+    display: block;
+    border-collapse: collapse;
+   margin: 0 auto;
+    /* overflow-x: scroll;で、
+    スマホ画面幅に表が入りきらない場合は
+    横スクロールしてくれます */
+    overflow-x: scroll;
+  }
+  .biz-hour th, .biz-hour td {
+    padding: 2px;
+    text-align: center;
+    /* 枠線。色を変えたい時は#ff6680というところをお好みで */
+    border: 1px solid #ff6680;
+  }
+  
+  /* 最上段の表の見出し。background-colorを書き換えれば背景色が変わります。 */
+  .biz-hour th {
+    background-color: pink;
+    font-weight: normal;
+  }
+  
+  /* 「土」の文字色 */
+  .biz-hour th.sat {
+    color: #3db2da;
+  }
+  
+  /* 「日」の文字色 */
+  .biz-hour th.sun {
+    color: #e66a6a;
+  }
+  #this-denter{
+    padding-top:100%;
+   
+     
+  }
+}
+#this-denter{
+  margin-top: -550px;
+}
+
+@media screen and (max-width:650px){
+  #this-denter{
+  margin-top: -40%;
+   
+}}
+.clo-main{
+    display: flex;
+    flex-direction: row;
+ justify-content: space-around;
+}
+
+
+.clo-side{
+ 
+    background-image: url("../001.jpg");
+  
+    background-size: contain;
+   border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    
+    top: 20px;
+    margin: 50px;
+  
+    display: inline-block;
+    animation-name: box-size;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+}
+@keyframes box-size {
+    0% {
+        
+       
+        transform:translateX(0);
+    }
+    20% {
+      
+        transform:translateX(-12px);
+    }
+    40% {
+     
+        transform:translateX(12px);
+    }
+   60% {
+      
+        transform:translateX(-4px);
+    }
+    80% {
+       
+        transform:translateX(4px);
+    }
+    100% {
+      
+        transform:translateX(0);
+    }
+}
+
+@media screen and (max-width:900px){
+  .clo-side{
+    background-size: cover;
+    margin: 20px;
+  } 
+}
+
+.dent-ori{
+    width: 80%;
+    height: 1200px;
+  
+    margin: 0 auto;
+    margin-bottom: 50px;
+   background-color: none;
+   border-radius: 15%;
+}
+.dent-ori h3{
+text-align: center;
+font-size: 50px;
+display: block;
+width: 400px;
+height:80px;
+background-color: #f99999;
+border-radius: 40px;
+border:4px solid green ;
+margin: 0 auto;
+}
+.dent-ori-point{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+.ori-reverse{
+    display: flex;
+      flex-direction: row-reverse;
+      justify-content:space-between;
+      position: relative;
+      right: 5%;
+  }
+  .dent-chief{
+   
+   
+    width: 100%;
+    height: 1200px;
+    background-image: url("../008.jpg");
+    background-size:cover;
+  background-position: left 90% center;
+  border-radius: 15%;
+ 
+ 
+}
+
+
+.js-fade{
+  display: block;
+  width: 45%;
+  height: 600px;
+  font-weight: bold;
+
+background-color:none;
+position: relative;
+top: -1100px;
+left: 5%;
+opacity: 0;
+visibility: hidden;
+transform: translateY(50px);
+transition: opacity 2s,visibility 2s, transform 2s;
+}
+
+
+.inview {
+opacity: 1;
+visibility: visible;
+transform: translateY(0px);
+
+    }
+    .dent-hello{
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .dent-koda{
+      height: 1200px;
+    }
+    @media screen and (max-width:1800px){
+      .dent-ori{
+        width: 90%;
+        height: 1400px;
+      
+        margin: 0 auto;
+        margin-bottom: 50px;
+     
+       border-radius: 30%;
+    }
+      .dent-hello{
+        display: block;
+        width: 100%;
+        height: 270px;
+        position: relative;
+        top: -1000px;
+        left: 1%;
+      }
+      .dent-chief{
+        display: block;
+        width: 100%;
+        height: 1400px; 
+        background-image: url("../008.jpg");
+        background-size:cover;
+        background-position:right 20% top -100px;
+        margin:  0 auto;
+        background-size:cover;
+    }
+    .clo03{
+    margin-bottom: 100px;
+   }
+    }
+  
+    @media screen and (max-width:1100px){
+      .dent-ori{
+        width: 90%;
+        height: 1800px;
+      
+        margin: 0 auto;
+        margin-bottom: 50px;
+     
+       border-radius: 30%;
+    }
+      .dent-hello{
+        display: block;
+        width: 100%;
+        height: 85vh;
+        position: relative;
+        top: 50px;
+        right: 50px;
+    padding: 20px;
+        background-color: #5abbe4;
+        border-radius: 10%;
+      }
+      .dent-chief{
+        display: block;
+        width: 100%;
+        height: 600px; 
+        background-image: url("../008.jpg");
+        background-size:cover;
+        background-position: right 150px top 100px;
+        margin:  0 auto;
+        background-size:cover;
+    }
+    }
+    @media screen and (max-width:900px){
+      .dent-ori{
+        width: 100%;
+        height: 1800px;
+      
+        margin: 0 auto;
+        margin-bottom: 50px;
+      
+       border-radius: 15%;
+    }
+      .dent-hello{
+        display: block;
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        top: 10px;
+        left: 1%;
+        background-color: #f99999;
+      }
+      .dent-chief{
+        display: block;
+        width: 100%;
+    }
+    }
+
+    @media screen and (max-width:700px){
+      .dent-chief{
+       
+       
+        width: 90%;
+        height: 600px;
+        background-image: url("../008.jpg");
+        background-size:cover;
+      background-position: right -120px center;
+      border-radius: 15%;
+     
+     
+    }
+      .dent-ori{
+        width:100%;
+        height: 1900px;
+      
+        margin: 0 auto;
+        margin-bottom: 50px;
+      
+       border-radius: 15%;
+    }
+      .dent-hello{
+        display: block;
+        width: 100%;
+        height: 110vh;
+        position: relative;
+        top: 10px;
+        left: 1%;
+      background-color: cadetblue;
+     
+    }}
+    @media screen and (max-width:600px){
+      .dent-hello{
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 10px;
+     margin-right: 20%;
+        margin-bottom: 130px;
+      background-color: cadetblue;}
+    }
+    @media screen and (max-width:550px){
+      .dent-chief{
+       
+       display: inline-block;
+        width: 90%;
+        height: 600px;
+        background-image: url("../008.jpg");
+        background-size:cover;
+      background-position: right -150px center;
+      border-radius: 15%;
+      margin-bottom: 10px;
+     margin-left: 5%;
+    }
+    .dent-chief h3{
+      font-size: 30px;
+      display: block;
+      width: 200px;
+      height:65px;
+      margin-right:20%;
+      }
+   
+  }
+  @media screen and (max-width:350px){
+    .dent-hello{
+      width:110%;
+     
+    
+    }
+  }
+   .koda{
+
+      font-size: 30px;
+    }
+   
+    #three-ko h3{
+      text-align: center;
+      font-size: 50px;
+      display: block;
+      width: 400px;
+      height:80px;
+      background-color: #f99999;
+      border-radius: 40px;
+      border:4px solid green ;
+      margin: 0 auto;
+     
+    }
+    @media screen and (max-width:550px){
+      #three-ko h3{
+      font-size: 30px;
+      display: block;
+      width: 250px;
+      height:65px;
+      margin-right:20%;
+      margin-bottom: 50px;
+      }
+    }
+    .th-circle{
+      width: 100%;
+    }
+    .th-circle1{
+display: block;
+width: 8%;
+height: 120px;
+background-color: rgba(01, 131, 199, 0.4);
+border-radius: 50%;
+margin: 0 auto;
+animation-name: col-ch1;
+animation-duration: 3s;
+animation-iteration-count: infinite;
+
+    }
+
+    @keyframes col-ch1 {
+0%{
+  background-color: rgba(001, 131, 199, 0.4);
+}
+50%{
+  background-color: rgba(001, 131, 199, 0.6);
+}
+100%{
+  background-color: rgba(001, 131, 199, 0.8); 
+}
+    }
+    .th-circle2{
+      display: block;
+      width: 8%;
+      height: 120px;
+      background-color: rgba(01, 131, 199, 0.6);
+      border-radius: 50%;
+      margin: 0 auto; 
+      position: relative;
+      top: -60px;
+      right: 4%;
+      animation-name: col-ch2;
+animation-duration: 3s;
+animation-iteration-count: infinite;
+
+    }
+    @keyframes col-ch2 {
+      0%{
+        background-color: rgba(230, 000, 018, 0.6); 
+      }
+      50%{
+        background-color: rgba(230, 000, 018, 0.8); 
+      }
+      100%{
+        background-color: rgba(230, 000, 018, 0.4); 
+      }
+    }
+    .th-circle3{
+      display: block;
+      width: 8%;
+      height: 120px;
+      background-color: rgba(167, 115,067,  0.8); 
+      border-radius: 50%;
+      margin: 0 auto; 
+      position: relative;
+      top: -180px;
+     left: 4%;
+     animation-name: col-ch3;
+     animation-duration: 3s;
+     animation-iteration-count: infinite;
+     
+    }
+    @keyframes col-ch3 {
+      0%{
+        background-color: rgba(167, 115,067,  0.8); 
+      }
+      50%{
+        background-color: rgba(167, 115,067,  0.4); 
+      }
+      100%{
+        background-color: rgba(167, 115,067,  06); 
+      }
+    }
+    @media screen and (max-width:1100px){ 
+      .th-circle{
+       margin: 0 auto;
+    }
+    .th-circle1{
+      width:12%; 
+    }
+    .th-circle2{
+      width:12%; 
+    }
+    .th-circle3{
+      width:12%; 
+    }
+
+  }
+  @media screen and (max-width:800px){ 
+    #three-ko{
+     margin-top:300px;
+    }
+    .th-circle1{
+      width:20%; 
+    }
+    .th-circle2{
+      width:20%; 
+      position: relative;
+      top: -60px;
+      right: 8%;
+    }
+    .th-circle3{
+      width:20%; 
+      position: relative;
+      top: -180px;
+     left: 8%;
+    }
+  }
+  @media screen and (max-width:580px){ 
+    #three-ko{
+     margin-top: 550px;
+    }
+     .th-circle1{
+      width:30%; 
+    }
+    .th-circle2{
+      width:30%; 
+      position: relative;
+      top: -60px;
+      right: 14%;
+    }
+    .th-circle3{
+      width:30%; 
+      position: relative;
+      top: -180px;
+     left: 10%;
+    }
+    
+  }
+  @media screen and (max-width:480px){ 
+    #three-ko{
+     margin-top: 800px;
+    }
+    .th-circle1{
+      width:30%; 
+    }
+    .th-circle2{
+      width:30%; 
+      position: relative;
+      top: -60px;
+      right: 14%;
+    }
+    .th-circle3{
+      width:30%; 
+      position: relative;
+      top: -180px;
+     left: 10%;
+    }
+  }
+  @media screen and (max-width:420px){ 
+    #three-ko{
+     margin-top: 1200px;
+    }
+  }
+  @media screen and (max-width:380px){ 
+    #three-ko{
+     margin-top: 1400px;
+    }
+    .th-circle1{
+      width:40%; 
+    }
+    .th-circle2{
+      width:40%; 
+      position: relative;
+      top: -60px;
+      right: 18%;
+    }
+    .th-circle3{
+      width:40%; 
+      position: relative;
+      top: -180px;
+     left: 14%;
+    }
+  }
+  @media screen and (max-width:350px){ 
+    #three-ko{
+     margin-top: 1800px;}
+     .clo0{
+      width: 120%;
+     }
+     .th-circle1{
+      width:50%; 
+    }
+    .th-circle2{
+      width:50%; 
+      position: relative;
+      top: -60px;
+      right: 18%;
+    }
+    .th-circle3{
+      width:50%; 
+      position: relative;
+      top: -180px;
+     left: 14%;
+    }
+
+    }
+  
+.dent-ori-no1{
+  font-size: 30px;
+  width:10%;
+  height: 140px;
+  text-align: center;
+  background-color: chocolate;
+  display: block;
+ padding-top: 20px;
+ border-radius: 50%;
+ animation-name: col-ch2;
+ animation-duration: 3s;
+ animation-iteration-count: infinite;
+}
+.dent-ori-ki{
+  font-size: 30px;
+  width: 30%;
+  height: 90px;
+  display: block;
+  text-align: center;
+  background-color: rgb(165 212 173);
+  border-radius: 60%;
+  padding-top:1px;
+border: 4px solid #f99999;
+  position: relative;
+  top:-25px;
+}
+
+.dent-ori1-photo{
+    width: 45%;
+    height: 850px;
+    background-image: url("../007.jpg");
+    background-position: center center;
+    background-size: cover;
+   margin-left: 50px;
+}
+
+.dent-ori1-sent{
+  display: block;
+    width: 45%;
+    height:850px;
+    margin-top: 1100px;
+ margin-right: 150px;
+ font-size: 30px;
+ background-color:rgb(245 176 144);
+ 
+}
+.dent-ori-no2{
+  font-size: 30px;
+  width:10%;
+  height: 140px;
+  text-align: center;
+  background-color: chocolate;
+  display: block;
+ padding-top: 20px;
+ border-radius: 50%;
+ animation-name: col-ch3;
+ animation-duration: 3s;
+ animation-iteration-count: infinite;
+}
+.dent-ori2-photo{
+    width: 45%;
+    height:850px;
+    background-image: url("../010.jpg");
+    background-size: cover;
+    margin-right: -50px;
+}
+.dent-ori2-sent{
+    width: 45%;
+    height: 850px;
+    font-size: 30px;
+    margin-top: 1100px;
+    margin-left: 50px;
+    background-color:rgb(245 176 144);
+    position: relative;
+    right: 20%;
+}
+.dent-ori-no3{
+  font-size: 30px;
+  width:10%;
+  height: 140px;
+  text-align: center;
+  background-color: chocolate;
+  display: block;
+ padding-top: 20px;
+ border-radius: 50%;
+ animation-name: col-ch1;
+ animation-duration: 3s;
+ animation-iteration-count: infinite;
+}
+.dent-ori3-photo{
+    width: 45%;
+    height: 850px;
+    background-image: url("../009.jpg");
+    background-size: cover;
+    background-position: left 30% center;
+    margin-left: 50px;
+}
+.dent-ori3-sent{
+    width: 45%;
+    height: 850px;
+    font-size: 30px;
+    margin-top: 1100px;
+    margin-right: 150px;
+    background-color:rgb(245 176 144);
+}
+@media screen and (max-width:1600px){
+ .dent-ori-point {
+  display: flex;
+  flex-direction: column;
+ }
+ 
+  .dent-koda{
+ 
+   height: 1500px;
+max-width: 1400px;
+  
+  }
+  .dent-ori-no1{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 40%;
+  }
+  .dent-ori1-photo{
+    background-image: url("../007.jpg");
+    background-position: center center;
+    background-size: cover;
+    display: block;
+ width: 80%;
+  margin: 0 auto;
+margin-bottom: 50px;
+
+height: 600px;
+  }
+  .dent-ori1-sent{
+    display: block;
+    width: auto;
+    margin-right: 100px;
+    height: auto;
+  
+  }
+  .clo2{
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+  .dent-ori-no2{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 40%;
+  }
+  .dent-ori2-photo{
+
+    background-image: url("../010.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 80%;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-right: 55px;
+   height: 600px;
+  }
+  .dent-ori2-sent{
+    display: block;
+    width: auto;
+    margin-right: 80px;
+    height: auto;
+   
+   
+  }
+  .dent-ori-no3{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  
+ 
+    .dent-ori3-photo{
+      background-image: url("../009.jpg");
+      background-position: center center;
+      background-size: cover;
+      display: block;
+   width: 80%;
+    margin: 0 auto;
+  margin-bottom: 50px;
+  height: 600px;
+    
+ 
+ }
+ .dent-ori3-sent{
+  display: block;
+  width: auto;
+  margin-right: 80px;
+  height: auto;
+ 
+}
+}
+ @media screen and (max-width:1100px){
+  .dent-ori-point {
+    display: flex;
+    flex-direction: column;
+   }
+   
+    .dent-koda{
+   
+     height: 1700px;
+  max-width: 1400px;
+    
+    }
+  .dent-ori-no1{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 50%;
+  }
+  .dent-ori-no2{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-no3{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 50%;
+  }
+  .dent-ori1-sent{
+    display: block;
+    width: 95%;
+  
+    height: auto;
+  
+  }
+  .dent-ori2-photo{
+
+    background-image: url("../010.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 80%;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-right: 5%;
+   height: 600px;
+  }
+  .dent-ori2-sent{
+    display: block;
+    width: 95%;
+  
+    height: auto;
+    margin-left:3%;
+  }
+  .dent-ori3-sent{
+    display: block;
+    width: 95%;
+  
+    height: auto;
+   
+  }
+  .clo2{
+    margin-top: -100px;
+    margin-bottom: 150px;
+  }
+ }
+ @media screen and (max-width:950px){
+  
+  .clo2{
+    margin-top:-50px;
+    margin-bottom: 150px;
+  } 
+  .clo03{
+    margin-top:-50px;
+    margin-bottom: 150px;
+  }
+  .dent-ori3-photo{
+    background-image: url("../009.jpg");
+    background-position: center center;
+    background-size: cover;
+    display: block;
+ width: 700px;
+  margin: 0 auto;
+margin-bottom: 50px;
+height: 600px;
+  
+
+}
+ }
+ @media screen and (max-width:900px){
+  
+  .clo2{
+    margin-top:30px;
+    margin-bottom: 150px;
+  } 
+  .clo03{
+    margin-top:-100px;
+    margin-bottom:150px;
+  }
+ }
+ @media screen and (max-width:850px){
+  .dent-ori-point {
+    display: flex;
+    flex-direction: column;
+   }
+   
+    .dent-koda{
+   
+     height: 2000px;
+  max-width: 1400px;
+    
+    }
+  .dent-ori-no1{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori1-sent{
+    display: block;
+    width: 95%;
+  
+    height: auto;
+   margin-bottom: 300px;
+  }
+
+  .dent-ori-no2{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-no3{
+    font-size: 30px;
+    width:15%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 65%;
+  }
+  .clo2{
+    margin-top: -300px;
+    margin-bottom: 100px;
+  }
+  .clo03{
+    margin-top: -50%;
+    margin-bottom: 150px;
+  } 
+  .dent-ori3-sent{
+    display: block;
+    width: 95%;
+  
+    height: auto;
+    
+  }
+ }
+ @media screen and (max-width:767px){
+  .clo2{
+    margin-top: -200px;
+    margin-bottom: 100px;
+  }
+  .dent-ori3-photo{
+    background-image: url("../009.jpg");
+    background-position: center center;
+    background-size: cover;
+    display: block;
+ width: 500px;
+  margin: 0 auto;
+margin-bottom: 50px;
+height: 500px;
+  
+
+}
+}
+ @media screen and (max-width:680px){
+  .dent-ori-point {
+    display: flex;
+    flex-direction: column;
+   }
+   
+    .dent-koda{
+   
+     height: 2300px;
+  max-width: 1400px;
+    
+    }
+    .dent-ori1-photo{
+      width:90%;
+      height: 400px;
+      background-image: url("../007.jpg");
+      background-position: center center;
+      background-size: cover;
+     margin-right: 4%;
+  }
+  .clo2{
+    margin-top: -110%;
+    margin-bottom: 200px;
+  } 
+  .clo03{
+    display: flex;
+    width: 160%;
+    margin-top: -120%;
+    margin-bottom:30%;
+    margin-left: -28%;
+  }  
+  .dent-ori2-photo{
+
+    background-image: url("../010.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 90%;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-left: 55px;
+   height: 400px;
+  }
+  .dent-ori-no1{
+    font-size: 30px;
+    width:35%;
+    margin-top: -80px;
+  }
+  .dent-ori-no2{
+    font-size: 30px;
+    width:30%;
+    margin-top: -80px;
+  }
+  .dent-ori-no3{
+    font-size: 30px;
+    width:30%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 30px;
+    width: 90%;
+  }
+ 
+ }
+ @media screen and (max-width:620px){
+  .clo03{
+    margin-top: -90%;
+    margin-bottom: 30%;
+  } 
+ }
+ @media screen and (max-width:580px){
+  .clo2{
+    margin-top: -70%;
+    margin-bottom: 30%;
+  } 
+  .dent-ori3-photo{
+    background-image: url("../009.jpg");
+    background-position: center center;
+    background-size: cover;
+    display: block;
+ width: 450px;
+  margin: 0 auto;
+margin-bottom: 50px;
+height: 400px;
+  
+
+}
+ }
+ @media screen and (max-width:520px){
+  .clo2{
+    margin-top: -70%;
+    margin-bottom: 30%;
+  } 
+  
+ }
+ @media screen and (max-width:480px){
+  .dent-ori-point {
+    display: flex;
+    flex-direction: column;
+   }
+   
+    .dent-koda{
+   
+     height: 2300px;
+  max-width: 1400px;
+    
+    }
+  .dent-ori-no1{
+    font-size: 30px;
+    width:50%;
+    margin-top: -80px;
+ 
+  }
+  .dent-ori-no2{
+    font-size: 30px;
+    width:50%;
+    margin-top: -80px;
+  }
+  .dent-ori-no3{
+    font-size: 30px;
+    width:50%;
+    margin-top: -80px;
+  }
+  .dent-ori-ki{
+    font-size: 25px;
+    width: 110%;
+  }
+  .dent-ori1-sent{
+    display: block;
+    width: 120%;
+  
+    height: auto;
+   margin-bottom: 20px;
+  margin-left: -15%;
+  }
+  .dent-ori1-photo{
+
+    background-image: url("../007.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 120%;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-left: -10%;
+   height: 400px;
+  }
+  .dent-ori2-photo{
+
+    background-image: url("../010.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 120%;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-left:-5%;
+   height: 400px;
+  }
+  .dent-ori2-sent{
+    display: block;
+    width: 120%;
+  
+    height: auto;
+   margin-bottom: 400px;
+  margin-left: -10%;
+  }
+  .dent-ori3-photo{
+
+    background-image: url("../009.jpg");
+    background-size: cover;
+    background-position:left 25% center;
+    display: block;
+    width: 400px;
+     margin: 0 auto;
+   margin-bottom: 50px;
+   margin-left: -10%;
+   height: 400px;
+  }
+  .dent-ori3-sent{
+    display: block;
+    width: 120%;
+  
+    height: auto;
+   margin-bottom: 500px;
+  margin-left: -14%;
+  }
+  .clo2{
+    display: block;
+    margin-top: -100%;
+    margin-bottom: 30%;
+    margin-left: 10%;
+  } 
+  .clo03{
+    display: block;
+    margin-top: -130%;
+    margin-bottom: 30%;
+    margin-left: 10%;
+  } 
+ }
+ @media screen and (max-width:480px){
+  .clo2{
+    display: flex;
+    width: 110%;
+   
+   
+    margin-left: -1%;
+  } 
+  .clo03{
+    display: flex;
+    width: 110%;
+   
+   
+    margin-left: -1%;
+  } 
+ }
+ @media screen and (max-width:425px){
+  .clo2{
+    display: block;
+    margin-top: -60%;
+    margin-bottom: 30%;
+    margin-left: 10%;
+  } 
+  .clo03{
+    display: block;
+    margin-top: -110%;
+    margin-bottom: 30%;
+    margin-left: 10%;
+  } 
+  .dent-ori3-photo{
+    background-image: url("../009.jpg");
+    background-position: center center;
+    background-size: cover;
+    display: block;
+ width: 350px;
+  margin: 0 auto;
+margin-bottom: 50px;
+height: 350px;
+margin-left:-7%; 
+
+}
+ }
+ @media screen and (max-width:375px){
+  .dent-ori1-photo{
+    width:120%;
+    height: 200px;
+    background-image: url("../007.jpg");
+    background-position: center center;
+    background-size: cover;
+   margin-right: 4%;
+} 
+.dent-ori2-photo{
+  width:120%;
+  height: 200px;
+  background-image: url("../010.jpg");
+  background-position: center center;
+  background-size: cover;
+ margin-right: 4%;
+} 
+.dent-ori3-photo{
+  width:300px;
+  height: 200px;
+  background-image: url("../009.jpg");
+  background-position: center center;
+  background-size: cover;
+ margin-right: 4%;
+} 
+.clo2{
+  display: flex;
+  width: 110%;
+  margin-top: -100%;
+  margin-bottom:50%;
+  margin-left: -1%;
+} 
+.clo03{
+  display: block;
+  margin-top: -110%;
+  margin-bottom: 40%;
+  margin-left: 10%;
+} 
+ }
+ @media screen and (max-width:370px){
+  .clo2{
+    display: flex;
+    width: 110%;
+    margin-top: -50%;
+    margin-bottom:50%;
+    margin-left: -1%;
+  } 
+  .clo03{
+    display: flex;
+    width: 160%;
+    margin-top: -110%;
+    margin-bottom:50%;
+    margin-left: -28%;
+  }  
+ }
+ @media screen and (max-width:326px){
+  .clo2{
+    display: flex;
+    width: 140%;
+    margin-top: 20%;
+    margin-bottom:40%;
+    margin-left: -15%;
+  } 
+  .clo03{
+    display: flex;
+    width: 160%;
+   
+   
+    margin-left: -28%;
+  }  
+}
+#operate h2{
+margin-top: 200px;
+    font-size: 40px;
+    display: block;
+    width: 300px;
+    height:70px;
+    background-color: #5abbe4;
+    margin: 0 auto;
+    border-radius: 40px;
+    border:4px solid sandybrown ; 
+}
+@media screen and (max-width:1600px){
+  #operate h2{
+    margin-top: -50px;
+  }
+}
+@media screen and (max-width:850px){
+  #operate h2{
+    margin-top: -250px;
+  }
+}
+@media screen and (max-width:680px){
+  #operate h2{
+    margin-top: -400px;
+  }
+}
+@media screen and (max-width:500px){
+  #operate h2{
+    margin-top: -500px;
+  }
+}
+@media screen and (max-width:400px){
+  #operate h2{
+    
+  
+    text-align: center;
+    font-size: 35px;
+    display: block;
+    width: 250px;
+    height:65px;
+    background-color: #5abbe4;
+    margin: 0 auto;
+    border-radius: 40px;
+    border:4px solid sandybrown ;
+    margin-top: -600px;
+    margin-bottom: 30px;
+}
+}
+#operate{
+    text-align: center;
+    margin-bottom: 100px;
+}
+@media screen and (max-width:750px){
+  #operate{
+   
+    margin-top: -250px;
+}  
+}
+@media screen and (max-width:670px){
+  #operate{
+   
+    margin-top: -200px;
+}  
+}
+@media screen and (max-width:510px){
+  #operate{
+   
+    margin-top:100px;
+}  
+}
+@media screen and (max-width:480px){
+  #operate{
+   
+    margin-top:-500px;
+}  
+}
+@media screen and (max-width:425px){
+  #operate{
+   
+    margin-top:300px;
+}  
+}
+
+@media screen and (max-width:375px){
+  #operate{
+   
+    margin-top:350px;
+}  
+}
+@media screen and (max-width:355px){
+  #operate{
+   
+    margin-top:400px;
+}  
+}
+@media screen and (max-width:325px){
+  #operate{
+   
+    margin-top:500px;
+}  
+}
+.ope-main{
+    display: flex;
+    flex-direction: row;
+ justify-content: space-around;
+
+}
+.ope-side{
+    background-image: url("../001.jpg");
+    background-size: contain;
+   border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    
+    top: 20px;
+    margin: 50px;
+  
+    display: inline-block;
+    animation-name: ope-ani;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+}
+@keyframes ope-ani {
+    0% {
+        
+       
+        transform:translate(0,0) rotate(0deg);
+    }
+    20% {
+      
+        transform:translate(-20px,-20px) rotate(-45deg);
+    }
+    40% {
+     
+        transform:translate(20px,20px) rotate(0deg);
+    }
+   60% {
+      
+    transform:translate(20px,20px) rotate(45eg);
+    }
+    80% {
+        transform:translate(0,0) rotate(0deg);
+      
+    }
+    100% {
+      transform:translate(-20px,-20px) rotate(-45deg);
+    
+    }
+}
+@media screen and (max-width:450px){
+  .clo-04{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 160%;
+   
+   
+    margin-left: -30%;
+  }
+}
+
+.expl-denter h2{
+  font-size: 40px;
+}
+@media screen and (max-width:430px){
+  .expl-denter h2{
+    font-size: 30px;
+  }
+}
+@media screen and (max-width:350px){
+  .expl-denter h2{
+    font-size: 20px;
+  }
+}
+#dent-ope{
+   margin: 0 auto;
+}
+#dent-ope h3{
+  text-align: center;
+      font-size: 50px;
+      display: block;
+      width: 450px;
+      height:80px;
+      background-color: #f99999;
+      border-radius: 40px;
+      border:4px solid green ;
+      margin: 0 auto;
+}
+@media screen and (max-width:550px){
+  #dent-ope h3{
+  font-size: 30px;
+  display: block;
+  width: 300px;
+  height:55px;
+  margin-right:20%;
+  margin-bottom: 50px;
+  margin: 0 auto;
+}
+  }
+
+@media screen and (max-width:360px){
+  #dent-ope h3{
+    text-align: center;
+        font-size: 30px;
+        display: block;
+        width: 300px;
+        height:60px;
+        background-color: #f99999;
+        border-radius: 40px;
+        border:4px solid green ;
+        margin-left: -10%;
+      }
+  }
+  @media screen and (max-width:330px){
+    #dent-ope h3{
+      text-align: center;
+          font-size: 30px;
+          display: block;
+          width: 150px;
+          height:120px;
+          background-color: #f99999;
+          border-radius: 40px;
+          border:4px solid green ;
+         margin: 0 auto;
+        }
+    }
+#dent-ope p{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.chart-box {
+position: relative;
+right: 100px;
+  width: 100%;
+  height: 70vh;
+  margin: 100px;
+ }
+ @media screen and (max-width:600px){
+  .chart-box  {
+    position: relative;
+left: -125px;
+      width: 110%;
+      height:auto;
+     
+ }
+ }
+.graph-b{
+  display: block;
+    width: 90%;
+    height:1100px;
+    background-image: url("../018.jpg");
+    background-size:cover;
+    background-position: center center;
+    text-align: center;
+   margin: 0 auto;
+}
+@media screen and (max-width:1750px){
+  .graph-b{
+    display: block;
+    width:80vw;
+    height:60vh;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:1350px){
+  .graph-b{
+    display: block;
+    width:90%;
+    height:600px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:1050px){
+  .graph-b{
+    display: block;
+    width:95%;
+    height:500px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:850px){
+  .graph-b{
+    display: block;
+    width:105%;
+    height:400px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+  margin-left: -30px;
+}
+}
+@media screen and (max-width:650px){
+  .graph-b{
+    display: block;
+    width:120%;
+    height:350px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+  margin-left: -45px;
+}
+}
+@media screen and (max-width:510px){
+  .graph-b{
+    width:125%;
+    height:300px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    margin-left: -50px;
+}
+}
+@media screen and (max-width:440px){
+  .graph-b{
+    width:130%;
+    height:250px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    margin-left: -50px;
+}
+}
+@media screen and (max-width:380px){
+  .graph-b{
+    width:135%;
+    height:200px;
+    background-image: url("../018.jpg");
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    margin-left: -50px;
+}
+}
+.chart-bar{
+  position: relative;
+
+  width: 85%;
+  height:85vh;
+  margin: 100px;
+  background-color: #f99999;
+  margin: 0 auto;
+  margin-top: 100px;
+ 
+}
+@media screen and (max-width:650px){
+  .chart-bar{
+    position: relative;
+  
+    width: 110%;
+    height:80vh;
+    margin: 100px;
+    background-color: #f99999;
+   margin-left: -20px;
+    margin-top: 100px;
+   
+  }
+  .iss{
+    margin-top: -100px;
+  }
+}
+@media screen and (max-width:440px){
+  .chart-bar{
+    position: relative;
+  
+    width: 120%;
+    height:70vh;
+    margin: 100px;
+    background-color: #f99999;
+   margin-left: -35px;
+    margin-top: 100px;
+   
+  }
+  .iss{
+    margin-top: -150px;
+  }
+}
+@media screen and (max-width:350px){
+  .chart-bar{
+    position: relative;
+  
+    width: 130%;
+    height:60vh;
+    margin: 100px;
+    background-color: #f99999;
+   margin-left: -35px;
+    margin-top: 100px;
+   
+  }
+}
+@media screen and (max-width:490px){
+  .clo-05{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 200%;
+   
+   
+    margin-left: -50%;
+  }
+}
+@media screen and (max-width:350px){
+  .clo-05{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 200%;
+   
+   
+    margin-left: -55%;
+  }
+}
+.dent-ope-e{
+  width: 35%;
+  height: 600px;
+  background-image: url("../010.jpg");
+  background-size: cover;
+  margin: 0 auto;
+ 
+}
+#nor-dent h3{
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  width: 300px;
+  height:80px;
+  background-color: #f99999;
+  border-radius: 40px;
+  border:4px solid green ;
+  margin: 0 auto;
+}
+@media screen and (max-width:550px){
+  #nor-dent h3{
+  font-size: 30px;
+  display: block;
+  width: 200px;
+  height:60px;
+  margin-right:20%;
+  margin-bottom: 50px;
+  margin: 0 auto;
+}
+  }
+
+
+  @media screen and (max-width:330px){
+    #nor-dent h3{
+      text-align: center;
+          font-size: 30px;
+          display: block;
+          width: 170px;
+          height:60px;
+          background-color: #f99999;
+          border-radius: 40px;
+          border:4px solid green ;
+         margin: 0 auto;
+        }
+    }
+#nor-dent p{
+  font-size: 30px;
+  font-weight: bold;
+}
+.dent-pro{
+  display: block;
+ max-width: 1200px;
+  height:400px;  
+margin: 0 auto;
+background-image: url("../025.png");
+background-position: center bottom ;
+background-size:cover;
+
+}
+@media screen and (max-width:1900px){
+  .dent-pro{
+    display: block;
+    max-width: 1200px;
+    height:400px;  
+  margin: 0 auto;
+  background-image: url("../025.png");
+  background-position: center bottom ;
+  background-size:cover;
+ 
+  }
+}
+@media screen and (max-width:1750px){
+  .dent-pro{
+    display: block;
+    max-width: 1200px;
+    height:300px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+   
+   margin: 0 auto;
+   
+}
+}
+@media screen and (max-width:1520px){
+  .dent-pro{
+  display: block;
+  
+  max-width: 800px;
+  height:250px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+   
+   margin: 0 auto;
+}
+}
+
+@media screen and (max-width:1150px){
+  .dent-pro{
+  display: block;
+  
+    max-width:600px;
+    height:200px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+   
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:650px){
+  .dent-pro{
+  display: block;
+  
+    max-width:440px;
+    height:150px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+   
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:520px){
+  .dent-pro{
+  display: block;
+  
+    max-width:350px;
+    height:120px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+   
+   margin: 0 auto;
+}
+}
+@media screen and (max-width:470px){
+  .dent-pro{
+    max-width:300px;
+    height:100px;
+    background-image: url("../025.png");
+    background-size: cover;
+    background-position: center bottom;
+    margin: 0 auto;
+}
+}
+@media screen and (max-width:380px){
+  .dent-pro{
+    background-image: url("../025.png");
+    max-width:250px;
+    height:80px;
+   
+    background-size:cover;
+    background-position: center bottom;
+  margin: 0 auto;
+  }  
+}
+@media screen and (max-width:490px){
+  .clo-006{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 200%;
+   
+   
+    margin-left: -50%;
+  }
+}
+@media screen and (max-width:350px){
+  .clo-006{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 200%;
+   
+   
+    margin-left: -55%;
+  }
+}
+#sisyuu-dent h3{
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  width: 300px;
+  height:80px;
+  background-color: #f99999;
+  border-radius: 40px;
+  border:4px solid green ;
+  margin: 0 auto;
+}
+@media screen and (max-width:550px){
+  #sisyuu-dent h3{
+  font-size: 30px;
+  display: block;
+  width: 250px;
+  height:55px;
+  margin-right:20%;
+  margin-bottom: 50px;
+  margin: 0 auto;
+}
+  }
+
+@media screen and (max-width:360px){
+  #sisyuu-dent h3{
+    text-align: center;
+        font-size: 30px;
+        display: block;
+        width: 250px;
+        height:60px;
+        background-color: #f99999;
+        border-radius: 40px;
+        border:4px solid green ;
+        margin-left: -2%;
+      }
+  }
+  @media screen and (max-width:330px){
+    #sisyuu-dent h3{
+      text-align: center;
+          font-size: 30px;
+          display: block;
+          width: 200px;
+          height:60px;
+          background-color: #f99999;
+          border-radius: 40px;
+          border:4px solid green ;
+         margin: 0 auto;
+        }
+    }
+#sisyuu-dent p{
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+  }
+  
+
+.dent-ope-bu{
+    width: 1200px;
+    height: 800px; 
+    margin: 0 auto;
+    background-image: url("../024.png");
+    background-size: cover;
+  }
+ @media screen and (max-width:1350px){
+  .dent-ope-bu{
+    width: 800px;
+    height: 600px; 
+    margin: 0 auto;
+    background-image: url("../024.png");
+    background-size: cover;
+  }
+    }
+    @media screen and (max-width:900px){
+      .dent-ope-bu{
+        width: 600px;
+        height: 400px; 
+        margin: 0 auto;
+        background-image: url("../024.png");
+        background-size: cover;
+      }
+        }
+        @media screen and (max-width:650px){
+          .dent-ope-bu{
+            width:450px;
+            height: 300px; 
+            margin: 0 auto;
+            background-image: url("../024.png");
+            background-size: cover;
+          }
+            } 
+            @media screen and (max-width:520px){
+              .dent-ope-bu{
+                width:350px;
+                height:250px; 
+                margin: 0 auto;
+                background-image: url("../024.png");
+                background-size: cover;
+              }
+                }    
+                @media screen and (max-width:420px){
+                  .dent-ope-bu{
+                    width:300px;
+                    height:200px; 
+                    margin: 0 auto;
+                    background-image: url("../024.png");
+                    background-size: cover;
+                  }
+                    }                       @media screen and (max-width:350px){
+                      .dent-ope-bu{
+                        width:250px;
+                        height:150px; 
+                        margin: 0 auto;
+                        background-image: url("../024.png");
+                        background-size: cover;
+                      }
+                        }                 
+ .dent-ope-e{
+  width:1200px;
+  height:800px; 
+  margin: 0 auto;
+  background-image: url("../010.jpg");
+  background-size: cover;
+ }                       
+ @media screen and (max-width:1300px){
+  .dent-ope-e{
+    width:900px;
+    height:600px; 
+    margin: 0 auto;
+    background-image: url("../010.jpg");
+    background-size: cover;
+   }                   
+ } 
+ @media screen and (max-width:950px){
+  .dent-ope-e{
+    width:700px;
+    height:400px; 
+    margin: 0 auto;
+    background-image: url("../010.jpg");
+    background-size: cover;
+   }                   
+ }     
+ @media screen and (max-width:780px){
+  .dent-ope-e{
+    width:550px;
+    height:350px; 
+    margin: 0 auto;
+    background-image: url("../010.jpg");
+    background-size: cover;
+   }                   
+ }                                          @media screen and (max-width:630px){
+  .dent-ope-e{
+    width:400px;
+    height:250px; 
+    margin: 0 auto;
+    background-image: url("../010.jpg");
+    background-size: cover;
+   }                   
+ }  
+ @media screen and (max-width:480px){
+  .dent-ope-e{
+    width:300px;
+    height:200px; 
+    margin: 0 auto;
+    background-image: url("../010.jpg");
+    background-size: cover;
+   }                   
+ }                        
+
+.dent-care{
+  width: 100%;
+}
+.dent-care-e{
+ 
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:30%;
+text-align: left;
+text-indent: 1em;
+padding-top: 2%;
+margin-bottom: 100px;
+
+}
+
+.dent-care-e p{
+ margin: 0;
+}
+@media screen and (max-width:1250px){
+  dent-care{
+    width: 200%;
+  }
+  .dent-care-e{
+    width: 80%;
+
+ height: 600px;
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:9%;
+text-align: left;
+text-indent: 1em;
+margin-bottom: 100px;
+
+}
+}
+@media screen and (max-width:750px){
+  dent-care{
+    width: 200%;
+  }
+  .dent-care-e{
+    width: 80%;
+
+ height: 770px;
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:9%;
+text-align: left;
+text-indent: 1em;
+margin-bottom: 100px;
+
+}
+}
+@media screen and (max-width:590px){
+  dent-care{
+    width: 200%;
+  }
+  .dent-care-e{
+    width: 85%;
+
+ height: 900px;
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:9%;
+text-align: left;
+text-indent: 1em;
+margin-bottom: 100px;
+
+}
+}
+@media screen and (max-width:500px){
+  dent-care{
+    width: 200%;
+  }
+  .dent-care-e{
+    width: 90%;
+
+ height: 1100px;
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:9%;
+text-align: left;
+text-indent: 1em;
+margin-bottom: 100px;
+
+}
+}
+@media screen and (max-width:400px){
+  dent-care{
+    width: 200%;
+  }
+  .dent-care-e{
+    width: 120%;
+
+ height: 1300px;
+    background-color: #f99999;
+    font-size:25px;
+   
+    position: relative;
+    top: 5px;
+left:-9%;
+text-align: left;
+text-indent: 1em;
+margin-bottom: 100px;
+
+}
+}
+.dent-care-pro{
+    width: 600px;
+    height: 500px;  
+    margin: 0 auto;
+    background-image: url("../021.png");
+    background-size: cover;
+    margin-bottom: 100px;
+}
+@media screen and (max-width:850px){
+  .dent-care-pro{
+    width: 500px;
+    height: 400px;  
+   margin-right: 140px;
+   margin-bottom: 50px;
+    background-image: url("../021.png");
+    background-size: cover;
+} 
+}
+@media screen and (max-width:600px){
+  .dent-care-pp{
+    display: block;
+    width: 100%;
+    height: 450px;
+  }
+  .dent-care-pro{
+   
+    width: 450px;
+    height: 350px;  
+   padding-right: 5%;
+   padding-left: 5%;
+   margin-bottom: 200px;
+    background-image: url("../021.png");
+    background-size: cover;
+  
+} 
+}
+@media screen and (max-width:530px){
+  .dent-care-pp{
+    display: block;
+    width: 100%;
+    height: 450px;
+  }
+  .dent-care-pro{
+    display: block;
+    max-width: 400px;
+    height: 350px;  
+   margin-left: -50px;
+  
+    background-image: url("../021.png");
+    background-size: cover;
+    margin-bottom: 200px;
+} 
+}
+@media screen and (max-width:450px){
+  .dent-care-pp{
+    display: block;
+    width: 100%;
+    height: 350px;
+  }
+  .dent-care-pro{
+    display: block;
+    max-width: 350px;
+    height: 300px;  
+   margin-left: -50px;
+  
+    background-image: url("../021.png");
+    background-size: cover;
+    margin-bottom:200px;
+} 
+}
+@media screen and (max-width:380px){
+  .dent-care-pp{
+    display: block;
+    width: 100%;
+    height: 350px;
+  }
+  .dent-care-pro{
+    display: block;
+    max-width: 300px;
+    height: 250px;  
+   margin-left: -50px;
+   margin-bottom: 200px;
+  
+    background-image: url("../021.png");
+    background-size: cover;
+
+} 
+}
+.dent-care-ti{
+  display: block;
+  width: 13%;
+  height: 40px;
+  background-color: #C299FF;
+  color: #000;
+  margin: 0 auto;
+  margin-bottom: 50px;
+font-size: 30px;
+border-radius: 20px;
+border:4px solid green;
+}
+.dent-care-ssy{
+  display: block;
+  width: 20%;
+  height: 40px;
+  background-color: rgba(01, 131, 199, 0.4);;
+  color: #000;
+  margin: 0 auto;
+  margin-bottom: 50px;
+font-size: 30px;
+border-radius: 20px; 
+border:4px solid #FFFF99 ; 
+}
+@media screen and (max-width:1500px){
+  .dent-care-ti {
+    display: block;
+    width: 18%;
+    height: 40px;
+    background-color: #C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 30%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:1100px){
+  .dent-care-ti{
+    display: block;
+    width: 25%;
+    height: 40px;
+    background-color:#C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 40%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:825px){
+  .dent-care-ti{
+    display: block;
+    width: 35%;
+    height: 40px;
+    background-color: #C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green ;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 50%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px; 
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:620px){
+  .dent-care-ti{
+    display: block;
+    width: 45%;
+    height: 40px;
+    background-color:#C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green ;
+  }
+  .dent-care-ssy{
+    display: block;
+    width:60%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:530px){
+  .dent-care-ti{
+    display: block;
+    width: 60%;
+    height: 40px;
+    background-color: #C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green ;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 75%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:415px){
+  .dent-care-ti{
+    display: block;
+    width:75%;
+    height: 40px;
+    background-color:#C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green ;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 100%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+@media screen and (max-width:345px){
+  .dent-care-ti{
+    display: block;
+    width:90%;
+    height: 40px;
+    background-color: #C299FF;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+  border:4px solid green ;
+  }
+  .dent-care-ssy{
+    display: block;
+    width: 115%;
+    height: 40px;
+    background-color: rgba(01, 131, 199, 0.4);;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  font-size: 30px;
+  border-radius: 20px;  
+  border:4px solid #FFFF99 ;
+  }
+}
+.dent-care-se{
+  display: block;
+  width:800px;
+  height: 300px;
+  text-indent: 1em;
+  text-align: left;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  background-color: #f99999;
+}
+@media screen and (max-width:900px){
+  .dent-care-se{
+    display: block;
+    width:600px;
+    height: 350px;
+    text-indent: 1em;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 60px;
+  } 
+}
+@media screen and (max-width:680px){
+  .dent-care-se{
+    display: block;
+    width:450px;
+    height: 450px;
+    text-indent: 1em;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 100px;
+  } 
+}
+@media screen and (max-width:550px){
+  .dent-care-se{
+    display: block;
+    width:350px;
+    height: 550px;
+    text-indent: 1em;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 120px;
+  } 
+}
+@media screen and (max-width:430px){
+  .dent-care-se{
+    display: block;
+    width:280px;
+    height: 650px;
+    text-indent: 1em;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 140px;
+  } 
+}
+@media screen and (max-width:350px){
+  .dent-care-se{
+    display: block;
+    width:230px;
+    height: 720px;
+    text-indent: 1em;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 140px;
+  } 
+}
+.dent-care-after-g{
+    width: 30%;
+    height: 500px;  
+    margin: 0 auto;
+    background-image: url("../022.jpg");
+    background-size: cover;
+    margin-bottom: 50px;
+  }
+    @media screen and (max-width:1500px){
+      .dent-care-after-g{
+        width: 35%;
+        height: 400px;  
+        margin: 0 auto;
+        background-image: url("../022.jpg");
+        background-size: cover;
+        margin-bottom: 50px;
+      }
+    }
+    @media screen and (max-width:850px){
+      .dent-care-after-g{
+        width: 45%;
+        height: 300px;  
+        margin: 0 auto;
+        background-image: url("../022.jpg");
+        background-size: cover;
+        margin-bottom: 50px;
+      }
+    }
+    @media screen and (max-width:600px){
+      .dent-care-after-g{
+        width: 60%;
+        height: 250px;  
+        margin: 0 auto;
+        background-image: url("../022.jpg");
+        background-size: cover;
+        margin-bottom: 50px;
+      }
+    }
+    @media screen and (max-width:480px){
+      .dent-care-after-g{
+        width: 70%;
+        height: 200px;  
+        margin: 0 auto;
+        background-image: url("../022.jpg");
+        background-size: cover;
+        margin-top: -50px;
+        margin-bottom: 50px;
+      }
+    }
+.dent-care-after-b{
+    width:1600px;
+    height:650px;  
+    margin: 0 auto;
+    background-image: url("../023.png");
+    background-size: cover;
+  }
+
+    @media screen and (max-width:1780px){
+      .dent-care-after-b{
+        width:1300px;
+        height:500px;  
+        margin: 0 auto;
+        background-image: url("../023.png");
+        background-size: cover;
+      margin-bottom: 100px;
+      }
+    }
+    @media screen and (max-width:1350px){
+      .dent-care-after-b{
+        width:1000px;
+        height:400px;  
+        margin: 0 auto;
+        background-image: url("../023.png");
+        background-size: cover;
+      margin-bottom: 100px;
+      }
+    }
+    @media screen and (max-width:1050px){
+      .dent-care-after-b{
+        width:750px;
+        height:300px;  
+        margin: 0 auto;
+        background-image: url("../023.png");
+        background-size: cover;
+      margin-bottom: 100px;
+      }
+    }
+    @media screen and (max-width:850px){
+      .dent-care-after-b{
+        width:650px;
+        height:250px;  
+        margin: 0 auto;
+        background-image: url("../023.png");
+        background-size: cover;
+      margin-bottom: 100px;
+      }
+    }
+    @media screen and (max-width:700px){
+      .dent-care-after-b{
+        width:600px;  
+    
+        background-image: url("../023.png");
+        background-size: cover;
+      margin-bottom: 200px;
+      margin-left: -50px;
+      }
+    }
+    @media screen and (max-width:650px){
+      .dent-care-after-b{
+        width:80%;
+        height:400px;  
+  margin: 0 auto;
+        background-image: url("../026.png");
+        background-size: cover;
+      margin-bottom: 350px;
+      margin-top: 50px;
+      }
+    } 
+    @media screen and (max-width:560px){
+      .dent-care-after-b{
+        width:65%;
+        height:250px;  
+ 
+        background-image: url("../026.png");
+        background-size: cover;
+      margin-bottom: 350px;
+      margin-top: 50px;
+      }
+    } 
+    @media screen and (max-width:480px){
+      .dent-care-after-b{
+        width:200px;
+        height:200px;  
+ 
+        background-image: url("../026.png");
+        background-size: cover;
+      margin-bottom: 350px;
+      margin-top: 50px;
+      }
+    } 
+#dent-space{
+    text-align: center;
+    
+}
+
+
+#dent-space h2{
+    
+  
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  width: 400px;
+  height:80px;
+  background-color: #5abbe4;
+  margin: 0 auto;
+  border-radius: 40px;
+  border:4px solid sandybrown ;
+
+  margin-bottom: 50px;
+}
+@media screen and (max-width:650px){
+  #dent-space h2{
+  
+      text-align: center;
+      font-size: 40px;
+      display: block;
+      width: 300px;
+      height:65px;
+      background-color: #5abbe4;
+      margin: 0 auto;
+      border-radius: 40px;
+      border:4px solid sandybrown ;
+      margin-top: -200px;
+      margin-bottom: 50px;
+  }
+}
+@media screen and (max-width:550px){
+  #dent-space h2{
+  
+
+  text-align: center;
+  font-size: 40px;
+  display: block;
+  width: 300px;
+  height:65px;
+  background-color: #5abbe4;
+  margin: 0 auto;
+  border-radius: 40px;
+  border:4px solid sandybrown ;
+  margin-top: -200px;
+  margin-bottom: 50px;
+}
+}
+@media screen and (max-width:400px){
+  #dent-space h2{
+  
+
+  text-align: center;
+  font-size: 35px;
+  display: block;
+  width: 250px;
+  height:65px;
+  background-color: #5abbe4;
+  margin: 0 auto;
+  border-radius: 40px;
+  border:4px solid sandybrown ;
+  margin-top: -200px;
+  margin-bottom: 50px;
+}
+}
+.clo-009{
+
+    display: flex;
+    width: 160%;
+   
+   
+    margin-left: -28%;
+  
+}
+.dent-staff{
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+}
+#hos-stuff h3{
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  width: 300px;
+  height:80px;
+  background-color: #f99999;
+  border-radius: 40px;
+  border:4px solid green ;
+  margin: 0 auto;
+}
+@media screen and (max-width:550px){
+  #hos-stuff h3{
+  font-size: 30px;
+  display: block;
+  width: 250px;
+  height:55px;
+  margin-right:20%;
+  margin-bottom: 50px;
+  margin: 0 auto;
+}
+  }
+
+@media screen and (max-width:360px){
+  #hos-stuff h3{
+    text-align: center;
+        font-size: 30px;
+        display: block;
+        width: 250px;
+        height:60px;
+        background-color: #f99999;
+        border-radius: 40px;
+        border:4px solid green ;
+        margin-left: -2%;
+      }
+  }
+  @media screen and (max-width:330px){
+    #hos-stuff h3{
+      text-align: center;
+          font-size: 30px;
+          display: block;
+          width: 200px;
+          height:60px;
+          background-color: #f99999;
+          border-radius: 40px;
+          border:4px solid green ;
+         margin: 0 auto;
+        }
+    }
+#hos-stuff p{
+  font-size: 30px;
+  font-weight: bold;
+}
+.hos-stuff-s{
+    width: 25%;
+    height: 400px;  
+    background-image: url("../012.jpg");
+    background-size: cover;
+    background-position:right 45% center;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-m{
+    width: 25%;
+    height: 400px;  
+    background-image: url("../011.jpg");
+    background-size: cover;
+    background-position:left 30% center;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-l{
+  width: 25%;
+  height: 400px;  
+  background-image: url("../019.jpg");
+  background-size: cover;
+  background-position:right 30% center;
+  margin: 0 auto; 
+  margin-bottom: 100px;
+}
+@media screen and (max-width:600px){
+  .hos-stuff-s{
+    width: 40%;
+    height: 300px;  
+    background-image: url("../012.jpg");
+    background-size: cover;
+    background-position:right 30% top;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-m{
+    width: 40%;
+    height: 300px;  
+    background-image: url("../011.jpg");
+    background-size: cover;
+    background-position:left 20% center;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-l{
+  width: 40%;
+  height: 300px;  
+  background-image: url("../019.jpg");
+  background-size: cover;
+  background-position:right 30% center;
+  margin: 0 auto; 
+  margin-bottom: 100px;
+} 
+}
+@media screen and (max-width:450px){
+  .hos-stuff-s{
+    width: 50%;
+    height: 250px;  
+    background-image: url("../012.jpg");
+    background-size: cover;
+    background-position:right 30% top;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-m{
+    width: 50%;
+    height: 250px;  
+    background-image: url("../011.jpg");
+    background-size: cover;
+    background-position:right 30% center;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-l{
+  width: 50%;
+  height: 250px;  
+  background-image: url("../019.jpg");
+  background-size: cover;
+  background-position:right 30% center;
+  margin: 0 auto; 
+  margin-bottom: 100px;
+} 
+}
+@media screen and (max-width:360px){
+  .hos-stuff-s{
+    width: 60%;
+    height: 200px;  
+    background-image: url("../012.jpg");
+    background-size: cover;
+    background-position:right 30% top;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-m{
+    width: 60%;
+    height:200px;  
+    background-image: url("../011.jpg");
+    background-size: cover;
+    background-position:right 30% center;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-stuff-l{
+  width: 60%;
+  height: 200px;  
+  background-image: url("../019.jpg");
+  background-size: cover;
+  background-position:right 30% center;
+  margin: 0 auto; 
+  margin-bottom: 100px;
+} 
+}
+
+.btnripple{
+  /*波紋の基点とするためrelativeを指定*/
+position: relative;
+  /*はみ出す波紋を隠す*/
+overflow: hidden;
+  /*ボタンの形状*/
+  text-decoration: none;
+display:inline-block;
+border: 5px solid #ff6680;
+color: #fff;
+padding: 10px 20px;
+
+  outline: none;
+}
+
+.btnripple::after {
+  content: "";
+  /*絶対配置で波紋位置を決める*/
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /*波紋の形状*/
+  background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+  transform: scale(10, 10);
+  /*はじめは透過0に*/
+  opacity: 0;
+  /*アニメーションの設定*/
+  border-radius: 0%;
+  transition: transform 0.3s, opacity 1s;
+  
+}
+.btnripple:hover{
+  cursor: pointer;
+ 
+}
+/*クリックされたあとの形状の設定*/
+  .btnripple:hover::after {
+  transform: scale(0, 0);
+  transition: 0s;
+  opacity: 0.3;
+ 
+}
+
+.btnripple.active{
+animation-name: st-bo;
+animation-duration: 1s;
+border-radius: 0%;
+}
+
+@keyframes st-bo{
+  from{
+    border-radius: 0%;
+    border: 5px solid #ff6680;
+  }
+  to{
+    border-radius: 50%;
+    border: 5px solid #5abbe4;
+  }}
+@media screen and (max-width:1200px){
+  .dent-staff{
+    display: flex;
+    flex-direction: column;
+   
+    }
+    .hos-stuff-s{
+      width: 95%;}  
+      .hos-stuff-m{ width: 95%;} 
+      .hos-stuff-l{ width: 95%;} 
+}
+.space-main{
+  display: flex;
+  flex-direction: row;
+justify-content: space-around;
+
+}
+.space-side{
+  background-image: url("../001.jpg");
+  background-size: contain;
+ 
+  width:100px;
+  height: 100px;
+  border-radius: 50%;
+  top: 10px;
+  margin: 50px;
+  opacity: 0;
+  display: inline-block;
+  animation-name: space-ani;
+  animation-duration:5s;
+  animation-iteration-count: infinite;
+  animation-delay: 1s;
+}
+@keyframes space-ani {
+0%{
+      
+  opacity: 0;
+   transform: translateY(-30px);
+  }
+30%{
+    
+      opacity: 1;
+   transform: translateY(0);
+  }
+  60%{
+    
+    opacity: 1;
+ transform: translateY(30px);
+}
+100%{
+    
+  opacity: 1;
+transform: translateY(0);
+}
+}
+#hos-inner h3{
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  width: 300px;
+  height:80px;
+  background-color: #f99999;
+  border-radius: 40px;
+  border:4px solid green ;
+  margin: 0 auto;
+}
+@media screen and (max-width:550px){
+  #hos-inner h3{
+  font-size: 30px;
+  display: block;
+  width: 250px;
+  height:55px;
+  margin-right:20%;
+  margin-bottom: 50px;
+  margin: 0 auto;
+}
+  }
+
+@media screen and (max-width:360px){
+  #hos-inner h3{
+    text-align: center;
+        font-size: 30px;
+        display: block;
+        width: 250px;
+        height:60px;
+        background-color: #f99999;
+        border-radius: 40px;
+        border:4px solid green ;
+        margin-left: -2%;
+      }
+  }
+  @media screen and (max-width:330px){
+    #hos-inner h3{
+      text-align: center;
+          font-size: 30px;
+          display: block;
+          width: 200px;
+          height:60px;
+          background-color: #f99999;
+          border-radius: 40px;
+          border:4px solid green ;
+         margin: 0 auto;
+        }
+    }
+#hos-inner p{
+  font-size: 30px;
+  font-weight: bold;
+}
+.inner-three{
+  display: flex;
+  flex-direction: row;
+justify-content: space-around;
+
+}
+@media screen and (max-width:1200px){
+  .inner-three{
+    display: flex;
+    flex-direction: column;
+   
+    }
+    
+}
+.inner-ko{
+  display: flex;
+ flex-direction: column;
+ align-items: center;
+ display: block;
+ width: 100%;
+}
+.hos-inner-in{
+  width: 80%;
+  height: 400px;   
+    background-image: url("../013.jpg");
+    background-size: cover;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-inner-bus{
+  width: 80%;
+  height: 400px;    
+    background-image: url("../005.jpg");
+    background-size: cover;
+    margin: 0 auto; 
+    margin-bottom: 100px;
+}
+.hos-inner-rex{
+  width: 80%;
+  height: 400px;   
+    background-image: url("../020.jpg");
+    background-size: cover;
+    margin: 0 auto; 
+    margin-bottom: 100px; 
+}
+@media screen and (max-width:650px){
+  .hos-inner-in{
+    width: 90%;
+    height: 300px;   
+      background-image: url("../013.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 50px;
+  }
+  .hos-inner-bus{
+    width: 90%;
+    height: 300px;    
+      background-image: url("../005.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 50px;
+  }
+  .hos-inner-rex{
+    width: 90%;
+    height: 300px;   
+      background-image: url("../020.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 250px; 
+  }
+}
+@media screen and (max-width:450px){
+  .hos-inner-in{
+    width: 95%;
+    height: 200px;   
+      background-image: url("../013.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 50px;
+  }
+  .hos-inner-bus{
+    width: 95%;
+    height: 200px;    
+      background-image: url("../005.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 50px;
+  }
+  .hos-inner-rex{
+    width: 95%;
+    height: 200px;   
+      background-image: url("../020.jpg");
+      background-position: left 20% center;
+      background-size: cover;
+      margin: 0 auto; 
+      margin-bottom: 350px; 
+  }
+}
+#access{
+    text-align: center;
+}
+
+#acc-map{
+  width: 100%;
+}
+#acc-map {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 75%; /* 比率を4:3に固定 */
+}
+
+/* Google Mapのiframe */
+#acc-map iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+@media screen and (max-width:1050px){
+#acc-map iframe{
+  width: 110%;
+  height: 100%;
+  margin-left: -5%;
+}
+}
+@media screen and (max-width:650px){
+  #acc-map iframe{
+    width: 120%;
+    height: 100%;
+    margin-left: -8%;
+  }
+  }
+  @media screen and (max-width:420px){
+    #acc-map iframe{
+      width: 130%;
+      height: 110%;
+      margin-left: -12%;
+    }
+    }
+
+.acc-inner{
+  font-size: 30px;
+}
